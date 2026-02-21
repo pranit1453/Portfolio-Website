@@ -1,1 +1,0 @@
-import{j as i,m as e}from"./vendor-BOSoyJG9.js";const a=({children:t,id:o,className:n=""})=>i.jsx("section",{id:o,className:`py-16 md:py-24 ${n}`,children:i.jsx(e.div,{initial:{opacity:0,y:50},whileInView:{opacity:1,y:0},viewport:{once:!0,amount:.2},transition:{duration:.8},children:t})});export{a as S};
