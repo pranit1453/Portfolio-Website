@@ -23,10 +23,13 @@ export default {
                 '3xl': '18px', // Updated radius
                 '4xl': '40px',
                 '5xl': '50px',
+                '6xl': '60px',
             },
             boxShadow: {
                 'glass': '0 8px 32px rgba(99, 102, 241, 0.12)', // Soft shadow with indigo tint
                 'glass-hover': '0 8px 32px rgba(99, 102, 241, 0.20)',
+                'glass-purple': '0 20px 80px rgba(99, 102, 241, 0.15), 0 0 40px rgba(99, 102, 241, 0.05)',
+                'glass-purple-sm': '0 10px 40px rgba(99, 102, 241, 0.1)',
             }
         },
     },

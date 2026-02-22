@@ -1,12 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
-import { toggleMobileMenu, selectIsMobileMenuOpen } from '../../features/nav/navSlice';
+import { toggleMobileMenu, closeMobileMenu, selectIsMobileMenuOpen } from '../../features/nav/navSlice';
+import { useOutsideAction } from '../../hooks/useOutsideAction';
+import { navLinks } from '../../data/navigation';
 
 const Header = () => {
     const dispatch = useDispatch();
     const isMobileOpen = useSelector(selectIsMobileMenuOpen);
     const [scroll, setScroll] = useState(false);
+    const headerRef = useRef(null);
+
+    // Custom hook to close navbar on outside click or scroll
+    useOutsideAction(headerRef, isMobileOpen, () => {
+        dispatch(closeMobileMenu());
+    });
 
     useEffect(() => {
         const handleScroll = () => {
@@ -16,20 +23,12 @@ const Header = () => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    const navLinks = [
-        { name: 'Home', href: '#home' },
-        { name: 'Skills', href: '#skills' },
-        { name: 'Qualification', href: '#qualification' },
-        { name: 'Expertise', href: '#expertise' },
-        { name: 'Projects', href: '#portfolio' },
-        { name: 'Contact', href: '#contact' },
-    ];
-
     return (
-        <header className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4">
+        <header
+            ref={headerRef}
+            className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4"
+        >
             <nav className={`glass-nav transition-all duration-300 ${scroll ? 'py-3 px-8' : 'py-4 px-10'} flex items-center justify-between gap-8`}>
-
-
                 {/* Desktop Nav */}
                 <ul className="hidden md:flex items-center gap-8">
                     {navLinks.map((link) => (

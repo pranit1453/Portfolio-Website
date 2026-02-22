@@ -78,11 +78,21 @@ const Qualification = () => {
                             >
                                 ✕
                             </button>
-                            <img
-                                src={selectedCert}
-                                alt="Certificate"
-                                className="w-full h-full object-contain rounded-2xl bg-white/5"
-                            />
+                            <div className="w-full h-full overflow-hidden rounded-2xl bg-white/5">
+                                {selectedCert.endsWith('.pdf') ? (
+                                    <iframe
+                                        src={`${selectedCert}#toolbar=0`}
+                                        title="Certificate PDF"
+                                        className="w-full h-[80vh] border-none"
+                                    />
+                                ) : (
+                                    <img
+                                        src={selectedCert}
+                                        alt="Certificate"
+                                        className="w-full h-full object-contain"
+                                    />
+                                )}
+                            </div>
                         </motion.div>
                     </motion.div>
                 )}
