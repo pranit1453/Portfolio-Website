@@ -129,11 +129,11 @@ overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.05);">
         if (!response.ok) {
             const errorData = await response.json();
             console.error('Resend API Error:', errorData);
-            return res.status(500).json({ error: 'Failed to dispatch email via Resend.' });
+            return res.status(500).json({ error: 'Failed to send message.' });
         }
 
         // Successfully dispatched
-        return res.status(200).json({ success: true, message: 'Email dispatched successfully!' });
+        return res.status(200).json({ success: true, message: 'Email sent successfully!' });
 
     } catch (error) {
         console.error('Serverless Function Initialization Error:', error);
