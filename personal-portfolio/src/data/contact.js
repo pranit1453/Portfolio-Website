@@ -18,21 +18,3 @@ export const contactInfo = [
         type: "whatsapp"
     }
 ];
-
-export const socialLinks = [
-    {
-        name: "LinkedIn",
-        url: "https://www.linkedin.com/in/pranit-bhangale-236474229/",
-        icon: BiLogoLinkedin
-    },
-    {
-        name: "GitHub",
-        url: "https://github.com/PranitBhangale",
-        icon: BiLogoGithub
-    },
-    {
-        name: "Gmail",
-        url: "mailto:pranitbhangale14@gmail.com",
-        icon: BiLogoGmail
-    }
-];

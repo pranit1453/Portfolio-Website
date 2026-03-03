@@ -19,12 +19,12 @@ export const homeData = {
     ],
     about: {
         title: 'About',
-        text: 'Backend Developer specializing in Java and Spring Boot, with a strong focus on building scalable, secure, and production-ready RESTful APIs. I emphasize clean architecture, SOLID principles, and efficient system design to create maintainable backend solutions. Alongside core backend development, I am actively exploring AI agents and modern intelligent systems to build smarter, future-oriented applications.'
+        text: 'Backend Developer specializing in Java and Spring Boot, building scalable, secure, and production-ready RESTful APIs. I apply Clean Architecture, SOLID principles, and strong system design to create efficient and maintainable backend solutions. I’m also exploring AI agents and intelligent systems to develop smarter, future-ready applications.'
     },
     professionalStats: [
         { label: 'Completed Projects', value: 3, icon: FcApproval },
         { label: 'Industry Projects', value: 0, icon: FcCommandLine },
-        { label: 'Companies Worked', value: 0, icon: FcBusiness },
+        { label: 'Companies Worked', value: 1, icon: FcBusiness },
     ],
     codingStats: codingAchievementsData.map(achievement => ({
         label: `${achievement.platform} Solved`,

@@ -8,7 +8,7 @@ const CertificateModal = ({ isOpen, onClose, imageSrc, title, aspectRatio = 1.41
 
     useEffect(() => {
         if (isOpen) {
-            setIsRendered(true);
+            setTimeout(() => setIsRendered(true), 0);
             // Wait for next frame to ensure DOM is ready before transitioning
             requestAnimationFrame(() => {
                 requestAnimationFrame(() => {
@@ -16,7 +16,7 @@ const CertificateModal = ({ isOpen, onClose, imageSrc, title, aspectRatio = 1.41
                 });
             });
         } else {
-            setIsVisible(false);
+            setTimeout(() => setIsVisible(false), 0);
         }
     }, [isOpen]);
 

@@ -3,7 +3,6 @@ import SectionWrapper from '../components/common/SectionWrapper';
 import { skillsData } from '../data/skills';
 import SectionHeader from '../components/common/SectionHeader';
 
-// eslint-disable-next-line react/prop-types
 const SkillCategory = React.memo(({ title, skills }) => (
     <div className="mb-8 sm:mb-10 text-center">
         <h3 className="text-base sm:text-lg font-bold mb-4 sm:mb-6 text-primary uppercase tracking-wide">
@@ -15,7 +14,7 @@ const SkillCategory = React.memo(({ title, skills }) => (
                     {skill.icon ? (
                         <div className="mb-2">{skill.icon}</div>
                     ) : (
-                        <img src={skill.image} alt={skill.name} className="w-10 h-10 sm:w-12 sm:h-12 mb-2 object-contain" />
+                        <img src={skill.image} alt={skill.name} loading="lazy" className="w-10 h-10 sm:w-12 sm:h-12 mb-2 object-contain" />
                     )}
                     <h4 className="text-xs sm:text-sm font-bold text-text text-center">{skill.name}</h4>
                     <p className="text-[10px] sm:text-xs text-muted mt-1">{skill.level}</p>
@@ -24,6 +23,8 @@ const SkillCategory = React.memo(({ title, skills }) => (
         </div>
     </div>
 ));
+
+SkillCategory.displayName = 'SkillCategory';
 
 const Skills = () => {
     const categories = [

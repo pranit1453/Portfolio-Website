@@ -13,7 +13,7 @@ export const projectsData = [
         ],
         // You can link your project assets here (must be placed in the public/ folder)
 
-        demoLink: "#"
+        demoLink: "pranitbhangale.vercel.app"
     },
     {
         id: 2,

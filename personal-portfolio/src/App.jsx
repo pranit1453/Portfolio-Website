@@ -12,6 +12,7 @@ import { useScrollRestore } from './hooks/useScrollRestore';
 const Portfolio = React.lazy(() => import('./pages/Portfolio'));
 const BlogPostPage = React.lazy(() => import('./pages/BlogPostPage'));
 const ProjectDetailsPage = React.lazy(() => import('./pages/ProjectDetailsPage'));
+const ExperienceDetailsPage = React.lazy(() => import('./pages/ExperienceDetailsPage'));
 
 function App() {
     useTheme(); // Initialize theme
@@ -28,6 +29,7 @@ function App() {
                         <Route path="/" element={<Portfolio />} />
                         <Route path="/blog/:id" element={<BlogPostPage />} />
                         <Route path="/project/:id" element={<ProjectDetailsPage />} />
+                        <Route path="/experience/:id" element={<ExperienceDetailsPage />} />
                     </Routes>
                 </Suspense>
             </main>

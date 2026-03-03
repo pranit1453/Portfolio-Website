@@ -1,15 +1,15 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useCountUp } from '../../hooks/useCountUp';
 
-const StatCard = ({ label, value, isActive, icon: Icon }) => {
-    const count = useCountUp(value, 2000, isActive);
+const StatCard = ({ label, value, isActive, icon: Icon, duration = 2000 }) => {
+    const count = useCountUp(value, duration, isActive);
 
     return (
         <div className="glass-card p-8 flex flex-col items-center justify-center gap-6 transition-all duration-300 hover:scale-105 hover:border-primary/40 group">
             {Icon && (
                 <div className="flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                     {typeof Icon === 'string' ? (
-                        <img src={Icon} alt={label} className="w-12 h-12 object-contain" />
+                        <img src={Icon} alt={label} loading="lazy" className="w-12 h-12 object-contain" />
                     ) : (
                         <Icon className="w-12 h-12" />
                     )}
@@ -52,6 +52,10 @@ const StatsSection = ({ title, stats }) => {
         };
     }, []);
 
+    // Normalize duration so all numbers increase at the same speed
+    const maxTarget = Math.max(...stats.map(s => s.value), 1);
+    const baseDuration = 2000;
+
     return (
         <div ref={sectionRef} className="w-full max-w-5xl mx-auto mt-16 mb-8 px-6">
             {title && (
@@ -65,6 +69,7 @@ const StatsSection = ({ title, stats }) => {
                         key={index}
                         label={stat.label}
                         value={stat.value}
+                        duration={(stat.value / maxTarget) * baseDuration}
                         isActive={isVisible}
                         icon={stat.icon}
                     />

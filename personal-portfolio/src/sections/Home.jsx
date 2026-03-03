@@ -19,7 +19,7 @@ const Home = () => {
                     transition={{ duration: 0.6 }}
                 >
                     <h1 className="text-5xl md:text-7xl font-bold mb-4 text-text">
-                        Hi, I'm <span className="text-primary">Pranit</span>
+                        Hi, I&apos;m <span className="text-primary">Pranit</span>
                     </h1>
                     <h3 className="text-2xl md:text-3xl text-muted mb-12">
                         <span ref={el} className="text-primary border-r-2 border-primary pr-1"></span>

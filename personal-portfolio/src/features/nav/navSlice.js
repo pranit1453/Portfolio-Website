@@ -4,7 +4,7 @@ const initialState = {
     isMobileMenuOpen: false,
 };
 
-export const navSlice = createSlice({
+const navSlice = createSlice({
     name: 'nav',
     initialState,
     reducers: {

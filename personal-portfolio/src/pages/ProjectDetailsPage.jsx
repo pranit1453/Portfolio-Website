@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { toast } from 'react-toastify';
 import { projectsData } from '../data/projects';
 import { cardVariants } from '../constants/animations';
+import ProjectAssets from '../components/projects/ProjectAssets';
 
 const ProjectDetailsPage = () => {
     const { id } = useParams();
@@ -24,53 +25,7 @@ const ProjectDetailsPage = () => {
         );
     }
 
-    // Function to render assets if they exist
-    const renderAssets = () => {
-        if (!project.demoAssets) return null;
-
-        return (
-            <div className="mt-12 space-y-8">
-                {project.demoAssets.video && (
-                    <div className="glass-panel p-2 overflow-hidden">
-                        <video
-                            src={project.demoAssets.video}
-                            controls
-                            className="w-full h-auto rounded-xl shadow-lg border border-glass-border"
-                            style={{ maxHeight: '70vh' }}
-                        >
-                            Your browser does not support the video tag.
-                        </video>
-                        <p className="text-center text-sm text-muted mt-3 mb-1 font-medium tracking-wide">Project Demo Video</p>
-                    </div>
-                )}
-
-                {project.demoAssets.document && (
-                    <div className="glass-panel p-2 overflow-hidden h-[80vh] min-h-[600px] flex flex-col">
-                        <div className="flex-grow rounded-xl overflow-hidden border border-glass-border relative">
-                            <iframe
-                                src={`${project.demoAssets.document}#toolbar=0`}
-                                title="Project Document"
-                                className="absolute inset-0 w-full h-full"
-                            />
-                        </div>
-                        <p className="text-center text-sm text-muted mt-3 mb-1 font-medium tracking-wide">Project Documentation (PDF)</p>
-                    </div>
-                )}
-
-                {project.demoAssets.image && (
-                    <div className="glass-panel p-2 overflow-hidden">
-                        <img
-                            src={project.demoAssets.image}
-                            alt={`${project.title} screenshot`}
-                            className="w-full h-auto rounded-xl shadow-lg border border-glass-border object-contain"
-                            style={{ maxHeight: '70vh' }}
-                        />
-                        <p className="text-center text-sm text-muted mt-3 mb-1 font-medium tracking-wide">Project Architecture / Screenshot</p>
-                    </div>
-                )}
-            </div>
-        );
-    }
+    // renderAssets extracted to ProjectAssets.jsx
 
     return (
         <motion.article
@@ -162,7 +117,7 @@ const ProjectDetailsPage = () => {
             </div>
 
             {/* Render any associated media assets */}
-            {renderAssets()}
+            <ProjectAssets assets={project.demoAssets} title={project.title} />
 
         </motion.article>
     );

@@ -30,6 +30,8 @@ const ScrollReveal = React.memo(({ children, className = "", delay = 0 }) => {
     );
 });
 
+ScrollReveal.displayName = 'ScrollReveal';
+
 ScrollReveal.propTypes = {
     children: PropTypes.node.isRequired,
     className: PropTypes.string,

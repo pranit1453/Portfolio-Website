@@ -12,7 +12,12 @@ export const useCountUp = (target, duration = 2000, active = true) => {
 
     useEffect(() => {
         if (!active) {
-            setCount(0);
+            setTimeout(() => setCount(0), 0);
+            return;
+        }
+
+        if (target === 0 || duration === 0) {
+            setTimeout(() => setCount(target), 0);
             return;
         }
 
@@ -20,9 +25,12 @@ export const useCountUp = (target, duration = 2000, active = true) => {
         const step = (timestamp) => {
             if (!startTimestamp) startTimestamp = timestamp;
             const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-            setCount(Math.floor(progress * target));
+
             if (progress < 1) {
+                setCount(Math.floor(progress * target));
                 window.requestAnimationFrame(step);
+            } else {
+                setCount(target);
             }
         };
 

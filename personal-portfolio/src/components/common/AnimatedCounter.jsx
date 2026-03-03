@@ -5,8 +5,7 @@ const AnimatedCounter = ({
     value,
     direction = "up",
     delay = 0,
-    className = "",
-    duration = 2000 // duration in ms
+    className = ""
 }) => {
     const ref = useRef(null);
     const inView = useInView(ref, { once: true, margin: "-50px" });
