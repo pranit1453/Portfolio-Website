@@ -58,7 +58,7 @@ const CertificateModal = ({ isOpen, onClose, imageSrc, title, aspectRatio = 1.41
 
             {/* Modal Container */}
             <div
-                className={`relative flex flex-col items-center justify-center p-4 sm:p-8 rounded-3xl border border-white/20 bg-white/5 backdrop-blur-2xl shadow-[0_10px_40px_rgba(0,0,0,0.08)] transition-all duration-300 ease-out origin-center ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}
+                className={`relative flex flex-col items-center justify-center p-4 sm:p-8 rounded-3xl border border-white/20 bg-white/5 backdrop-blur-2xl shadow-[0_10px_40px_rgba(0,0,0,0.08)] transition-all duration-300 ease-out origin-center ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'} max-w-full max-h-full overflow-y-auto no-scrollbar`}
                 onClick={(e) => e.stopPropagation()}
             >
                 {/* Close Button positioned inside the modal top-right */}
@@ -91,7 +91,7 @@ const CertificateModal = ({ isOpen, onClose, imageSrc, title, aspectRatio = 1.41
                             style={{
                                 // Mathematically constrain iframe to exact aspect ratio
                                 // This perfectly eliminates native-viewer dark letterboxing margins
-                                width: `min(90vw, calc(80vh * ${aspectRatio}))`,
+                                width: `min(100%, calc(80vh * ${aspectRatio}))`,
                                 height: `min(80vh, calc(90vw / ${aspectRatio}))`,
                                 aspectRatio: `${aspectRatio} / 1`,
                                 overflow: 'hidden'
@@ -102,7 +102,7 @@ const CertificateModal = ({ isOpen, onClose, imageSrc, title, aspectRatio = 1.41
                         <img
                             src={imageSrc}
                             alt={title || "Certificate image"}
-                            className="max-w-[90vw] max-h-[70vh] sm:max-h-[80vh] w-auto h-auto object-contain rounded-xl shadow-[0_10px_40px_rgba(0,0,0,0.08)] pointer-events-none select-none"
+                            className="max-w-full max-h-[70vh] sm:max-h-[80vh] w-auto h-auto object-contain rounded-xl shadow-[0_10px_40px_rgba(0,0,0,0.08)] pointer-events-none select-none"
                         />
                     )}
                 </div>
