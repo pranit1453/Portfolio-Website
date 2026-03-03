@@ -1,10 +1,12 @@
 export const navLinks = [
-    { name: 'Home', href: '#home' },
-    { name: 'Skills', href: '#skills' },
-    { name: 'Qualification', href: '#qualification' },
-    { name: 'Expertise', href: '#expertise' },
-    { name: 'Projects', href: '#portfolio' },
-    { name: 'Contact', href: '#contact' },
+    { name: 'Home', href: '/#home' },
+    { name: 'Tech Stack', href: '/#skills' },
+    { name: 'Projects', href: '/#portfolio' },
+    { name: 'Experience', href: '/#experience' },
+    { name: 'Qualification', href: '/#qualification' },
+    { name: 'Achievements', href: '/#achievements' },
+    { name: 'Blog', href: '/#blog' },
+    { name: 'Contact', href: '/#contact' },
 ];
 
 export const socialLinks = [

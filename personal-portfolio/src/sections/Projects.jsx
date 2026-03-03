@@ -1,82 +1,42 @@
-import React, { useState, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import SectionWrapper from '../components/common/SectionWrapper';
+import { useCarousel } from '../hooks/useCarousel';
 import { motion, AnimatePresence } from 'framer-motion';
-import { BsArrowRight } from 'react-icons/bs';
+import { useNavigate } from 'react-router-dom';
 import { BiChevronLeft, BiChevronRight } from 'react-icons/bi';
 import { projectsData } from '../data/projects';
-import MediaModal from '../components/common/MediaModal';
+import ScrollReveal from '../components/common/ScrollReveal';
 import {
-    sectionVariants,
     slideVariants,
     cardVariants,
     badgeVariants
 } from '../constants/animations';
+import SectionHeader from '../components/common/SectionHeader';
 
 const Projects = () => {
     const projects = projectsData;
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const [direction, setDirection] = useState(0); // -1 for left, 1 for right
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [selectedAsset, setSelectedAsset] = useState(null);
-    const [activeProject, setActiveProject] = useState(null);
-    const [itemsPerPage, setItemsPerPage] = useState(2);
+    const navigate = useNavigate();
 
-    // Update items per page based on window size
-    useEffect(() => {
-        const handleResize = () => {
-            setItemsPerPage(window.innerWidth < 768 ? 1 : 2);
-        };
-        handleResize();
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
+    // Delegate presentation logic (pagination, state, slicing) to custom hook
+    const {
+        currentIndex,
+        direction,
+        visibleItems: visibleProjects,
+        paginate,
+        navigateTo
+    } = useCarousel(projects);
 
-    // --- Logic ---
-
-    const paginate = (newDirection) => {
-        setDirection(newDirection);
-        setCurrentIndex((prev) => {
-            const nextIndex = prev + newDirection;
-            if (nextIndex < 0) return projects.length - 1;
-            if (nextIndex >= projects.length) return 0;
-            return nextIndex;
-        });
-    };
-
-    const handleOpenModal = (e, project) => {
+    const handleOpenAsset = useCallback((e, project) => {
         e.preventDefault();
-        setActiveProject(project);
-        setIsModalOpen(true);
-    };
-
-    const handleCloseModal = () => {
-        setIsModalOpen(false);
-        setTimeout(() => {
-            setSelectedAsset(null);
-            setActiveProject(null);
-        }, 300);
-    };
-
-    // Dynamic Circular Slicing
-    const visibleProjects = [];
-    for (let i = 0; i < itemsPerPage; i++) {
-        visibleProjects.push(projects[(currentIndex + i) % projects.length]);
-    }
+        // Always navigate to the detailed project view instead of opening assets in a new tab
+        navigate(`/project/${project.id}`);
+    }, [navigate]);
 
     return (
         <SectionWrapper id="portfolio">
-            <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.1 }}
-                variants={sectionVariants}
-                className="container mx-auto px-6 max-w-6xl relative"
-            >
+            <ScrollReveal className="container mx-auto px-6 max-w-6xl relative">
                 {/* Header */}
-                <div className="text-center mb-16">
-                    <h2 className="text-3xl font-bold mb-2 text-text">Projects</h2>
-                    <div className="text-muted">Most recent Work</div>
-                </div>
+                <SectionHeader title="Projects" subtitle="Most recent Work" />
 
                 <div className="relative group/carousel">
                     {/* Navigation Arrows */}
@@ -119,7 +79,8 @@ const Projects = () => {
                                             scale: 1.02,
                                             transition: { type: "spring", stiffness: 400, damping: 10 }
                                         }}
-                                        className="glass-card flex flex-col items-stretch overflow-hidden h-[450px] transition-shadow duration-300 hover:shadow-glass-purple relative group"
+                                        onClick={(e) => handleOpenAsset(e, project)}
+                                        className="glass-card flex flex-col items-stretch overflow-hidden h-[450px] transition-shadow duration-300 hover:shadow-glass-purple relative group cursor-pointer"
                                     >
                                         {/* Hover Glow Effect */}
                                         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
@@ -165,19 +126,21 @@ const Projects = () => {
                                                     </motion.span>
                                                 ))}
                                             </motion.div>
+
+                                            {/* Read More Link (Similar to Blog) */}
+                                            <div className="mt-8 pt-4 flex justify-between items-center w-full border-t border-glass-border">
+                                                <span className="text-primary text-[10px] font-bold uppercase tracking-[0.2em] flex items-center group-hover:opacity-80 transition-opacity">
+                                                    View Details
+                                                    <span className="ml-2 transform transition-transform duration-300 group-hover:translate-x-2">
+                                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                                        </svg>
+                                                    </span>
+                                                </span>
+                                            </div>
                                         </div>
 
-                                        {/* Footer / Demo Button */}
-                                        <div className="px-8 py-5 border-t border-glass-border bg-white/5 backdrop-blur-sm relative z-10">
-                                            <motion.button
-                                                onClick={(e) => project.demoAssets ? handleOpenModal(e, project) : window.open(project.demoLink, '_blank')}
-                                                whileHover={{ scale: 1.05, x: 5 }}
-                                                whileTap={{ scale: 0.95 }}
-                                                className="inline-flex items-center gap-2 text-sm text-text font-bold hover:text-primary transition-colors group/link"
-                                            >
-                                                View demo <BsArrowRight className="group-hover/link:translate-x-1 transition-transform" />
-                                            </motion.button>
-                                        </div>
+
                                     </motion.div>
                                 ))}
                             </motion.div>
@@ -192,10 +155,7 @@ const Projects = () => {
                         return (
                             <button
                                 key={index}
-                                onClick={() => {
-                                    setDirection(index > currentIndex ? 1 : -1);
-                                    setCurrentIndex(index);
-                                }}
+                                onClick={() => navigateTo(index)}
                                 className="relative py-2 px-1 focus:outline-none group/dot"
                                 aria-label={`Go to project ${index + 1}`}
                             >
@@ -212,15 +172,7 @@ const Projects = () => {
                         );
                     })}
                 </div>
-            </motion.div>
-
-            <MediaModal
-                isOpen={isModalOpen}
-                onClose={handleCloseModal}
-                asset={selectedAsset}
-                availableAssets={activeProject?.demoAssets}
-                onSelectAsset={(type, src, title) => type ? setSelectedAsset({ type, src, title }) : setSelectedAsset(null)}
-            />
+            </ScrollReveal>
         </SectionWrapper>
     );
 };

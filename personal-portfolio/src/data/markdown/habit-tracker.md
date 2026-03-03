@@ -1,0 +1,6 @@
+- Developed a full-stack Habit Tracker application using Spring Boot and React.
+- Built REST APIs with layered architecture and integrated Spring Data JPA (Hibernate) for database operations.
+- Implemented JWT-based authentication, custom exception handling, and request validation.
+- Designed MySQL database schema and optimized queries.
+- Created responsive frontend using React and Bootstrap with API integration.
+- Deployed the application to a live production environment.

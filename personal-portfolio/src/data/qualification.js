@@ -25,11 +25,13 @@ export const certificationData = [
     {
         title: "Post Graduation in Advanced Computing (PgDAC)",
         link: "https://placehold.co/800x600/e2e8f0/1e293b?text=Certificate+Preview",
-        description: "Click to view certificate"
+        description: "Click to view certificate",
+        aspectRatio: 1.333
     },
     {
         title: "Fundamentals of Java Programming",
         link: "/FJP CQYSM9433FZG.pdf",
-        description: "Click to view certificate"
+        description: "Click to view certificate",
+        aspectRatio: 1.2941 // US Letter Format for Coursera Certificates
     }
 ];

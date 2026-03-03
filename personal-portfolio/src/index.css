@@ -13,6 +13,7 @@
     @apply text-text antialiased min-h-screen selection:bg-primary selection:text-white;
     background-attachment: fixed;
     /* Keeps gradient fixed during scroll */
+    overflow-x: hidden;
   }
 }
 
@@ -78,8 +79,4 @@
   .custom-scrollbar::-webkit-scrollbar-thumb {
     @apply bg-primary/20 rounded-full hover:bg-primary/40 transition-colors;
   }
-}
-
-@layer components {
-  /* Add custom component classes here if needed */
 }

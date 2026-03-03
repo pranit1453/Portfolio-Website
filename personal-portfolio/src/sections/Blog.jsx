@@ -1,0 +1,87 @@
+import React, { useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import SectionWrapper from '../components/common/SectionWrapper';
+import ScrollReveal from '../components/common/ScrollReveal';
+import { blogData } from '../data/blog';
+import SectionHeader from '../components/common/SectionHeader';
+
+const Blog = () => {
+    const navigate = useNavigate();
+
+    const handleReadArticle = useCallback((e, post) => {
+        e.preventDefault();
+        if (post.content) {
+            navigate(`/blog/${post.id}`);
+        } else if (post.link && post.link !== '#') {
+            window.open(post.link, '_blank');
+        } else {
+            toast.info("This article will be available soon!", {
+                position: "bottom-center",
+                theme: "dark",
+            });
+        }
+    }, [navigate]);
+
+    return (
+        <SectionWrapper id="blog">
+            <ScrollReveal className="container mx-auto px-6 max-w-6xl relative">
+                <SectionHeader title="Blog" subtitle="Latest Articles & Technical Writing" />
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full mt-12 items-start">
+                    {blogData.map((post) => (
+                        <div
+                            key={post.id}
+                            className="group relative flex flex-col items-stretch glass-card overflow-hidden transition-all duration-500 ease-in-out hover:-translate-y-2 hover:shadow-2xl cursor-pointer w-full bg-white/5 border border-glass-border hover:border-primary/30 min-h-[320px]"
+                            onClick={(e) => handleReadArticle(e, post)}
+                        >
+                            {/* Animated Background Glow */}
+                            <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+
+                            <div className="p-8 relative z-10 flex flex-col w-full h-full">
+                                {/* Meta Information */}
+                                <div className="flex items-center mb-4 text-[10px] font-bold text-primary uppercase tracking-[0.2em] opacity-80 group-hover:opacity-100 transition-opacity">
+                                    <span>{post.date}</span>
+                                </div>
+
+                                <h3 className="text-xl font-bold text-text mb-3 leading-snug group-hover:text-primary transition-colors duration-300">
+                                    {post.title}
+                                </h3>
+
+                                <p className="text-muted text-sm leading-relaxed mb-6 flex-grow">
+                                    {post.excerpt}
+                                </p>
+
+                                {/* Tags */}
+                                <div className="flex flex-wrap gap-2 mb-6">
+                                    {post.tags.map((tag, i) => (
+                                        <span
+                                            key={i}
+                                            className="px-3 py-1 bg-primary/5 text-primary text-[9px] font-bold rounded-full uppercase tracking-widest border border-primary/10 group-hover:border-primary/30 group-hover:bg-primary/10 transition-all duration-300"
+                                        >
+                                            {tag}
+                                        </span>
+                                    ))}
+                                </div>
+
+                                {/* Read More Link */}
+                                <div className="mt-auto pt-4 flex justify-between items-center w-full border-t border-glass-border">
+                                    <span className="text-primary text-[10px] font-bold uppercase tracking-[0.2em] flex items-center group-hover:opacity-80 transition-opacity">
+                                        Read Article
+                                        <span className="ml-2 transform transition-transform duration-300 group-hover:translate-x-2">
+                                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                            </svg>
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </ScrollReveal>
+        </SectionWrapper>
+    );
+};
+
+export default Blog;

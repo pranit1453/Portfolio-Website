@@ -1,14 +1,22 @@
 import { useEffect } from 'react';
-
+import { useLocation } from 'react-router-dom';
 
 export const useScrollRestore = () => {
-    // If using react-router, we can use useLocation. 
-    // For a single page portfolio with sections, this might handle scroll-to-top on refresh or manual restoration.
+    const { pathname, hash } = useLocation();
 
     useEffect(() => {
-        // Simple restore to top on refresh if desired, or handle hash links
-        if (!window.location.hash) {
+        if (hash) {
+            const id = hash.replace('#', '');
+            const element = document.getElementById(id);
+            if (element) {
+                // Short delay to ensure layout is complete before scrolling
+                setTimeout(() => {
+                    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 100);
+            }
+        } else {
+            // No hash, default scroll to top
             window.scrollTo(0, 0);
         }
-    }, []);
+    }, [pathname, hash]);
 };

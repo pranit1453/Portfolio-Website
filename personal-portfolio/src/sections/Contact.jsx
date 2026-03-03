@@ -1,41 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import SectionWrapper from '../components/common/SectionWrapper';
-import { sendEmail } from '../services/emailService';
-import { BiEnvelope, BiLogoWhatsapp } from 'react-icons/bi';
+import { useContactForm } from '../hooks/useContactForm';
 import { FiMessageSquare, FiSend } from 'react-icons/fi';
 import { contactInfo } from '../data/contact';
 import ContactCard from '../components/common/ContactCard';
+import SectionHeader from '../components/common/SectionHeader';
 
 const Contact = () => {
-    const [formData, setFormData] = useState({ name: '', email: '', message: '' });
-    const [status, setStatus] = useState('');
-
-    const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-    };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setStatus('Sending...');
-        const result = await sendEmail(e.target, {
-            time: new Date().toLocaleString()
-        });
-
-        if (result.success) {
-            setStatus('Message sent successfully!');
-            setFormData({ name: '', email: '', message: '' });
-            setTimeout(() => setStatus(''), 3000);
-        } else {
-            setStatus(`Failed to send: ${result.error}`);
-            setTimeout(() => setStatus(''), 3000);
-        }
-    };
+    const { formData, status, handleChange, handleSubmit } = useContactForm();
 
     return (
         <SectionWrapper id="contact" className="">
             <div className="container mx-auto px-6">
-                <h2 className="text-3xl font-bold text-center mb-12 text-text">Contact Me</h2>
-                <div className="text-center text-muted mb-12 -mt-8">Get in touch</div>
+                <SectionHeader title="Contact Me" subtitle="Get in touch" />
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-5xl mx-auto">
 

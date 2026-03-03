@@ -1,26 +1,13 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import SectionWrapper from '../components/common/SectionWrapper';
 import StatsSection from '../components/common/StatsSection';
 import TypewriterText from '../components/common/TypewriterText';
-import Typed from 'typed.js';
+import { useTypewriter } from '../hooks/useTypewriter';
 import { motion } from 'framer-motion';
 import { homeData } from '../data/home';
 
 const Home = () => {
-    const el = useRef(null);
-
-    useEffect(() => {
-        const typed = new Typed(el.current, {
-            strings: homeData.typedStrings,
-            typeSpeed: 50,
-            backSpeed: 50,
-            loop: true
-        });
-
-        return () => {
-            typed.destroy();
-        };
-    }, []);
+    const el = useTypewriter(homeData.typedStrings);
 
     return (
         <SectionWrapper id="home" className="min-h-screen flex flex-col justify-center">
@@ -68,6 +55,7 @@ const Home = () => {
                             <img
                                 src="https://plus.unsplash.com/premium_photo-1685086785636-2a1a0e5b591f?q=80&w=1932&auto=format&fit=crop"
                                 alt="Java Technology"
+                                loading="lazy"
                                 className="w-full h-full object-cover rounded-full opacity-90 transition-transform duration-500 hover:scale-105"
                             />
                             <div className="absolute inset-0 bg-primary/10 rounded-full mix-blend-overlay"></div>
@@ -78,7 +66,6 @@ const Home = () => {
                 {/* Statistics Sections */}
                 <div className="mt-20 space-y-12">
                     <StatsSection title="Professional Impact" stats={homeData.professionalStats} />
-                    <StatsSection title="Coding Platforms" stats={homeData.codingStats} />
                 </div>
             </div>
         </SectionWrapper>
